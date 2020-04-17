@@ -13,7 +13,7 @@ function doGet() {
   var ss = SpreadsheetApp.openById(sid);
   var sheets = ss.getSheetByName(sname);
   
-　var last_row = 28;
+　var last_row = 27;
 　var last_col = 4;
   
   var values= sheets.getRange(1,1,last_row ,last_col).getValues();
@@ -28,6 +28,19 @@ function doGet() {
   var moment = Moment.load();
   
   
+  value.sort(function (a, b) {
+    if(a[1]=="稼働"){return -1;}
+    if(b[1]=="稼働"){return 1;}
+    var nowyear=moment().format("YYYY-");
+    var aa=moment(nowyear + moment(a[1]).format("MM-DDT00:00:00Z"))-moment();
+    var bb=moment(nowyear + moment(b[1]).format("MM-DDT00:00:00Z"))-moment();
+    if(aa<0){return 1;}
+    if(bb<0){return -1;}
+    
+  return aa-bb;
+  });
+  
+  var magic_imas="http://sokudon.s17.xrea.com/gametimer.html#";
   var html="";
   var url="http://www.shurey.com/js/timer/countdown.html?C,"; //154626840,
   
@@ -52,7 +65,7 @@ function doGet() {
   var kotosi = (moment(moment().format("YYYY-")+moment(stat*10000).format("MM-DDT00:00:00Z"))/10000).toFixed(0);
       
     
-  html += "<tr><td>"+titleraw+"</td><td>"+ hyperlink( url +stat +"," +geturl(title),moment(stat*10000).format()) ;
+  html += "<tr><td>"+hyperlink(magic_imas + k,titleraw)+"</td><td>"+ hyperlink( url +stat +"," +geturl(title),moment(stat*10000).format()) ;
   html += "</td><td>"+ hyperlink( url + kotosi +"," +geturl(title3),moment(kotosi*10000).format()) +"</td>";
   html += "</td>";
   }
@@ -103,7 +116,7 @@ function geturl(title){
 }
 
 function hyperlink(link,name){
-  link= "<a href='" + link +"'>" + name +"</a>";
+  link= "<a href='" + link +"' target=\"_blank\" rel=\"noopener\">" +name +"</a>";
   
   return link;
 }

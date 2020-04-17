@@ -26,7 +26,9 @@ function doGet() {
   var stat= "";
   var end= "";
   var moment = Moment.load();
-  
+  for (var i=1;i<value.length;i++){
+  value[i][4]=i;
+  }
   
   value.sort(function (a, b) {
     if(a[1]=="稼働"){return -1;}
@@ -65,7 +67,7 @@ function doGet() {
   var kotosi = (moment(moment().format("YYYY-")+moment(stat*10000).format("MM-DDT00:00:00Z"))/10000).toFixed(0);
       
     
-  html += "<tr><td>"+hyperlink(magic_imas + k,titleraw)+"</td><td>"+ hyperlink( url +stat +"," +geturl(title),moment(stat*10000).format()) ;
+  html += "<tr><td>"+hyperlink(magic_imas + value[k][4],titleraw)+"</td><td>"+ hyperlink( url +stat +"," +geturl(title),moment(stat*10000).format()) ;
   html += "</td><td>"+ hyperlink( url + kotosi +"," +geturl(title3),moment(kotosi*10000).format()) +"</td>";
   html += "</td>";
   }

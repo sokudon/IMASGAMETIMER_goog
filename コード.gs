@@ -27,8 +27,8 @@ function doGet() {
   var stat= "";
   var end= "";
   var moment = Moment.load();
-  for (var i=1;i<value.length;i++){
-  value[i][5]=i;
+  for (var i=0;i<value.length;i++){
+  value[i][5]=i+1;
   }
   
   value.sort(function (a, b) {
